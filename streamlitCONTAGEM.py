@@ -30,6 +30,17 @@ mapeamento = {
 # Obtendo contagem total e contagem por trecho
 contagem_total, contagem_por_trecho = contar_arquivos(caminho, mapeamento)
 
+# Exibindo no dashboard
+st.title("Quantidade de laudos de supervisão ocupacional salvos no SharePoint (SO - TED INCRA/UFPR)")
+st.write(f"Total de laudos: {contagem_total}")
+
+st.subheader("Contagem por tipo de laudo:")
+for trecho, contagem in contagem_por_trecho.items():
+    st.write(f"{trecho}: {contagem}")
+
+# Adicione esta linha para depuração
+print("Contagem por trecho:", contagem_por_trecho)
+
 # Criando gráfico de pizza
 fig, ax = plt.subplots()
 
@@ -38,13 +49,8 @@ labels = contagem_por_trecho.keys()
 sizes = contagem_por_trecho.values()
 colors = plt.cm.tab20c.colors[:len(labels)]
 
-# Exibindo no dashboard
-st.title("Quantidade de laudos de supervisão ocupacional salvos no SharePoint (SO - TED INCRA/UFPR)")
-st.write(f"Total de laudos: {contagem_total}")
-
-st.subheader("Contagem por tipo de laudo:")
-for trecho, contagem in contagem_por_trecho.items():
-    st.write(f"{trecho}: {contagem}")
+# Adicione esta linha para depuração
+print("Tamanhos das fatias:", sizes)
 
 # Adicionando gráfico de pizza
 wedges, texts, autotexts = ax.pie(sizes, labels=None, colors=colors, autopct='%1.1f%%', startangle=140, pctdistance=0.85, explode=[0.05] * len(labels))
