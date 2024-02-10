@@ -30,6 +30,14 @@ mapeamento = {
 # Obtendo contagem total e contagem por trecho
 contagem_total, contagem_por_trecho = contar_arquivos(caminho, mapeamento)
 
+# Criando gráfico de pizza
+fig, ax = plt.subplots()
+
+# Definindo dados para o gráfico de pizza
+labels = contagem_por_trecho.keys()
+sizes = contagem_por_trecho.values()
+colors = plt.cm.tab20c.colors[:len(labels)]
+
 # Exibindo no dashboard
 st.title("Quantidade de laudos de supervisão ocupacional salvos no SharePoint (SO - TED INCRA/UFPR)")
 st.write(f"Total de laudos: {contagem_total}")
@@ -38,12 +46,7 @@ st.subheader("Contagem por tipo de laudo:")
 for trecho, contagem in contagem_por_trecho.items():
     st.write(f"{trecho}: {contagem}")
 
-# Criando gráfico de pizza
-fig, ax = plt.subplots()
-labels = contagem_por_trecho.keys()
-sizes = contagem_por_trecho.values()
-colors = plt.cm.tab20c.colors[:len(labels)]
-
+# Adicionando gráfico de pizza
 wedges, texts, autotexts = ax.pie(sizes, labels=None, colors=colors, autopct='%1.1f%%', startangle=140, pctdistance=0.85, explode=[0.05] * len(labels))
 
 ax.set_title("Distribuição dos laudos de supervisão ocupacional", pad=20)
